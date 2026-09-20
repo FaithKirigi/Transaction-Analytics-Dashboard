@@ -26,8 +26,9 @@ Deliver interactive business intelligence
 | Transactions   | 6,362,620               |
 | Features       | 11                      |
 | Missing Values | None                    |
-| Granularity    | One row per transaction |
 
+| Granularity    | One row per transaction |
+The analysis uses the [PaySim synthetic financial dataset](https://www.kaggle.com/datasets/ealaxi/paysim1).
 
 
 ## Tools
@@ -197,3 +198,101 @@ sql/
 ├── 02_data_profiling.sql
 ├── 03_data_preparation.sql
 └── 04_reporting_views.sql
+02_data_profiling.sql
+
+Explores the raw transaction data and establishes baseline metrics for transaction activity, value, account activity, and fraud.
+
+03_data_preparation.sql
+
+Creates the prepared transaction view used for analysis, including time features, transaction value segmentation, balance movements, and fraud-related fields.
+
+04_reporting_views.sql
+
+Creates reusable views for KPI, transaction, time, account, and risk reporting.
+
+Power BI Measures
+
+The dashboard uses DAX measures for dynamic analysis, including:
+
+Total Transactions =
+COUNTROWS(Transactions)
+
+Total Transaction Value =
+SUM(Transactions[amount])
+
+Average Transaction Value =
+AVERAGE(Transactions[amount])
+
+Fraud Cases =
+SUM(Transactions[isFraud])
+
+Fraud Rate =
+DIVIDE(
+    [Fraud Cases],
+    [Total Transactions],
+    0
+)
+
+Flagged Transactions =
+SUM(Transactions[isFlaggedFraud])
+
+Fraud Transaction Value =
+CALCULATE(
+    [Total Transaction Value],
+    Transactions[isFraud] = 1
+)
+
+These measures respond to the report's filter context and allow the same metrics to be analyzed across transaction type, value segment, and time.
+
+Repository Structure
+transaction-analytics-dashboard/
+│
+├── README.md
+│
+├── sql/
+│   ├── 02_data_profiling.sql
+│   ├── 03_data_preparation.sql
+│   └── 04_reporting_views.sql
+│
+├── powerbi/
+│   └── Transaction_Analytics_Dashboard.pbix
+│
+├── images/
+│   ├── executive_overview.png
+│   ├── transaction_analytics.png
+│   ├── fraud_risk_monitoring.png
+│   └── investigation_queue.png
+│
+└── documentation/
+    └── data_dictionary.md
+
+The source transaction file and local SQLite database are excluded from the repository because of their size.
+
+Skills Demonstrated
+
+SQL
+
+Data profiling and validation
+Data transformation
+CASE-based segmentation
+Feature engineering
+Aggregation
+Analytical views
+
+Power BI
+
+Data modeling
+DAX measures
+KPI reporting
+Interactive filtering
+Data visualization
+Dashboard design
+
+Business Intelligence
+
+Transaction performance analysis
+Risk monitoring
+Metric reconciliation
+Analytical segmentation
+Investigation-focused reporting
+Translating transaction data into business insights
