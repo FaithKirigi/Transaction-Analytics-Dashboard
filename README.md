@@ -188,6 +188,11 @@ The dataset contains **8,213 fraud-labelled transactions**, while only **16 tran
 The dashboard presents these separately because `isFlaggedFraud` represents a specific indicator within the PaySim simulation and is not treated as a complete measure of fraud detection performance.
 
 ---
+### Power BI Report
+
+The complete Power BI report is included in the repository and managed using Git LFS.
+
+[View Power BI project file](powerbi/Transaction_Analytics_Dashboard.pbix)
 
 ## SQL Structure
 
